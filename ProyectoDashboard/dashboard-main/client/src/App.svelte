@@ -1,6 +1,10 @@
 <script>
+  import table from "./componentes/table.svelte";
   let apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5174";
 </script>
+
+<table {apiBase} />
+
 
 <!-- PRUEBA PARA VER QUE TAILWIND ESTA BIEN -->
 <h1 class="text-3xl font-bold text-blue-600">
