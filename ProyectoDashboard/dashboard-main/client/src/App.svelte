@@ -2,6 +2,12 @@
   let apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5174";
 </script>
 
+<!-- PRUEBA PARA VER QUE TAILWIND ESTA BIEN -->
+<h1 class="text-3xl font-bold text-blue-600">
+  ¡Tailwind funciona! 🎨
+</h1>
+<!-- -------------------------------------- -->
+
 <div class="container">
   <h1>Dashboard Starter</h1>
   <p>Tu API está en: <code>{apiBase}</code></p>
