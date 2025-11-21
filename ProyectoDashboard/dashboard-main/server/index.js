@@ -132,9 +132,9 @@ app.get("/api/quintiles/nacional", async (req, res) => {
     );
 
     const salida = datos.map((d) => ({
-      quintil_padres: Number(d[quintilesNacionalColumns.padresQuintil]),
-      hijos_quintil: Number(d[quintilesNacionalColumns.hijosQuintil]),
-      porcentaje: Number(d[quintilesNacionalColumns.porcentaje]),
+      quintil_padres: d[quintilesNacionalColumns.padresQuintil], // texto
+      hijos_quintil: d[quintilesNacionalColumns.hijosQuintil], // texto
+      porcentaje: Number(d[quintilesNacionalColumns.porcentaje]), // número
     }));
 
     res.json(salida);
@@ -143,7 +143,6 @@ app.get("/api/quintiles/nacional", async (req, res) => {
     res.status(500).json({ error: "Error cargando quintiles nacionales" });
   }
 });
-
 app.get("/api/conversor/hijos", async (req, res) => {
   try {
     const datos = await getDataset(
