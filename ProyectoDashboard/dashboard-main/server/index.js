@@ -10,8 +10,8 @@ import {
   ccaaColumns,
   quintilesNacionalColumns,
   conversorHijosColumns,
-  conversorPadresColumns
-} from "./columnascolocada.js";
+  conversorPadresColumns,
+} from "./columnascolocadas.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,20 +49,26 @@ async function getDataset(key, fileName) {
   return cache[key];
 }
 
-
 app.get("/api/nacional/curva", async (req, res) => {
   try {
-    const datos = await getDataset("curva_nacional", "curva_movilidad_nacional.csv");
+    const datos = await getDataset(
+      "curva_nacional",
+      "curva_movilidad_nacional.csv"
+    );
 
     const sexoFiltro = req.query.sexo || "total";
     const tipoRentaFiltro = req.query.tipo_renta || "individual";
 
     let filtrados = datos;
     if (datos[0][nacionalColumns.sexo] !== undefined) {
-      filtrados = filtrados.filter((d) => d[nacionalColumns.sexo] === sexoFiltro);
+      filtrados = filtrados.filter(
+        (d) => d[nacionalColumns.sexo] === sexoFiltro
+      );
     }
     if (datos[0][nacionalColumns.tipoRenta] !== undefined) {
-      filtrados = filtrados.filter((d) => d[nacionalColumns.tipoRenta] === tipoRentaFiltro);
+      filtrados = filtrados.filter(
+        (d) => d[nacionalColumns.tipoRenta] === tipoRentaFiltro
+      );
     }
 
     const salida = filtrados
@@ -84,7 +90,7 @@ app.get("/api/nacional/curva", async (req, res) => {
           centil_hijo_loess: d[nacionalColumns.hijosCentil]
             ? Number(d[nacionalColumns.hijosCentil])
             : null,
-          n: d.n ? Number(d.n) : null
+          n: d.n ? Number(d.n) : null,
         };
       })
       .sort((a, b) => a.centil_padres - b.centil_padres);
@@ -96,16 +102,18 @@ app.get("/api/nacional/curva", async (req, res) => {
   }
 });
 
-
 app.get("/api/ccaa/ranking", async (req, res) => {
   try {
-    const datos = await getDataset("ranking_ccaa_p20", "ranking_ccaa_centil_padres_20.csv");
+    const datos = await getDataset(
+      "ranking_ccaa_p20",
+      "ranking_ccaa_centil_padres_20.csv"
+    );
 
     const salida = datos
       .map((d) => ({
         ccaa: d[ccaaColumns.nombreComunidadAutonoma],
         centil_padres: 20,
-        centil_hijo: Number(d[ccaaColumns.hijosCentil])
+        centil_hijo: Number(d[ccaaColumns.hijosCentil]),
       }))
       .sort((a, b) => b.centil_hijo - a.centil_hijo);
 
@@ -116,15 +124,17 @@ app.get("/api/ccaa/ranking", async (req, res) => {
   }
 });
 
-
 app.get("/api/quintiles/nacional", async (req, res) => {
   try {
-    const datos = await getDataset("quintiles_nacional", "distribucion_quintiles_nacional_padres_hijos.csv");
+    const datos = await getDataset(
+      "quintiles_nacional",
+      "distribucion_quintiles_nacional_padres_hijos.csv"
+    );
 
     const salida = datos.map((d) => ({
       quintil_padres: Number(d[quintilesNacionalColumns.padresQuintil]),
       hijos_quintil: Number(d[quintilesNacionalColumns.hijosQuintil]),
-      porcentaje: Number(d[quintilesNacionalColumns.porcentaje])
+      porcentaje: Number(d[quintilesNacionalColumns.porcentaje]),
     }));
 
     res.json(salida);
@@ -134,34 +144,41 @@ app.get("/api/quintiles/nacional", async (req, res) => {
   }
 });
 
-
 app.get("/api/conversor/hijos", async (req, res) => {
   try {
-    const datos = await getDataset("conv_hijos", "conversor_centiles_a_euros_hijos.csv");
-    res.json(datos.map((d) => ({
-      centil: Number(d[conversorHijosColumns.centil_hijos]),
-      renta: Number(d[conversorHijosColumns.renta_hijos])
-    })));
+    const datos = await getDataset(
+      "conv_hijos",
+      "conversor_centiles_a_euros_hijos.csv"
+    );
+    res.json(
+      datos.map((d) => ({
+        centil: Number(d[conversorHijosColumns.centil_hijos]),
+        renta: Number(d[conversorHijosColumns.renta_hijos]),
+      }))
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error cargando conversor hijos" });
   }
 });
 
-
 app.get("/api/conversor/padres", async (req, res) => {
   try {
-    const datos = await getDataset("conv_padres", "conversor_centiles_a_euros_padres.csv");
-    res.json(datos.map((d) => ({
-      centil: Number(d[conversorPadresColumns.centil_padres]),
-      renta: Number(d[conversorPadresColumns.renta_padres])
-    })));
+    const datos = await getDataset(
+      "conv_padres",
+      "conversor_centiles_a_euros_padres.csv"
+    );
+    res.json(
+      datos.map((d) => ({
+        centil: Number(d[conversorPadresColumns.centil_padres]),
+        renta: Number(d[conversorPadresColumns.renta_padres]),
+      }))
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error cargando conversor padres" });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Funciona http://localhost:${PORT}`);
