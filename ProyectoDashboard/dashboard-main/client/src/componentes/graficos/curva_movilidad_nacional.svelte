@@ -5,7 +5,8 @@
   let chartEl;
 
   onMount(async () => {
-    const res = await fetch("/api/nacional/curva?sexo=total&tipo_renta=individual");
+    const res = await fetch("/api/nacional/curva");
+    if (!res.ok) throw new Error("Error al cargar datos");
     const rawData = await res.json();
 
     const data = rawData
