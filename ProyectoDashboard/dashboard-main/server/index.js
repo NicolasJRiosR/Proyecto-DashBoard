@@ -131,11 +131,21 @@ app.get("/api/quintiles/nacional", async (req, res) => {
       "distribucion_quintiles_nacional_padres_hijos.csv"
     );
 
-    const salida = datos.map((d) => ({
-      quintil_padres: d[quintilesNacionalColumns.padresQuintil], // texto
-      hijos_quintil: d[quintilesNacionalColumns.hijosQuintil], // texto
-      porcentaje: Number(d[quintilesNacionalColumns.porcentaje]), // número
-    }));
+    const hijos = ["0-20", "20-40", "40-60", "60-80", "80-100"];
+
+    const salida = [];
+
+    datos.forEach((row) => {
+      const quintilPadres = row["quintil_padres"];
+
+      hijos.forEach((h) => {
+        salida.push({
+          quintil_padres: quintilPadres,
+          hijos_quintil: h,
+          porcentaje: Number(row[h]),
+        });
+      });
+    });
 
     res.json(salida);
   } catch (err) {
@@ -143,6 +153,7 @@ app.get("/api/quintiles/nacional", async (req, res) => {
     res.status(500).json({ error: "Error cargando quintiles nacionales" });
   }
 });
+
 app.get("/api/conversor/hijos", async (req, res) => {
   try {
     const datos = await getDataset(
