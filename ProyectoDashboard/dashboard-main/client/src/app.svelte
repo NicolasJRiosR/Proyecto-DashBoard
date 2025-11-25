@@ -1,75 +1,101 @@
-<script>
-  import DistribucionQuintiles from "./componentes/graficos/distribucion_quintilies_nacional.svelte";
-  import MapaEspaña from "./componentes/graficos/mapaEspaña.svelte";
+<script> 
+  //Graficos
+  import DistribucionQuintiles from "./componentes/graficos/distribucion_quintilies_nacional.svelte"; 
+  import MapaEspaña from "./componentes/graficos/mapaEspaña.svelte"; 
   import CurvaMovilidadNacional from "./componentes/graficos/curva_movilidad_nacional.svelte"; 
-</script>
+  
+  // Tablas
+  import TablaQuintiles from "./componentes/tablas/tabla_quintiles.svelte";
+  import TablaEspaña from "./componentes/tablas/tabla_españa.svelte";
+  import TablaCurvaMovilidad from "./componentes/tablas/tabla_curva_movilidad.svelte";
+  
+  import { onMount } from "svelte"; 
+  
+  let dark = false; 
+  
+  function toggleDark() { 
+    dark = !dark; 
+    document.documentElement.classList.toggle("dark", dark); 
+    localStorage.setItem("theme", dark ? "dark" : "light"); 
+
+    window.dispatchEvent(new CustomEvent("modoCambiado"));
+  } 
+  
+  onMount(() => { 
+    window.addEventListener("modoCambiado", () => renderChart(data));
+
+    const saved = localStorage.getItem("theme"); 
+    if (saved === "dark") { 
+      dark = true; 
+      document.documentElement.classList.add("dark"); 
+    } 
+  }); 
+</script> 
 
 <!-- Cabecera general del dashboard -->
-<header class="cabecera-dashboard">
-  <div class="cabecera-contenido">
-    <button class="cabecera-boton" aria-label="Modo Oscuro">
-       ☾☼
+<header class="w-full bg-[#D85858] dark:bg-[#590811] px-[30px] py-[20px] border border-black dark:border-[#8a9095]">
+  <div class="flex items-center gap-[20px] relative">
+    <button
+      class="bg-white dark:bg-[#1d2022] rounded-md px-[15px] py-[4px] text-[25px] cursor-pointer border border-black dark:border-[#8a9095] text-black dark:text-white"
+      aria-label="Modo Oscuro"
+      on:click={toggleDark}
+    >
+      ☾☼
     </button>
-    <h1 class="cabecera-titulo">Escalera Social</h1>
+    <h1 class="absolute left-1/2 -translate-x-1/2 text-black dark:text-white text-[34px] font-bold">
+      Escalera Social
+    </h1>
   </div>
 </header>
 
-<main class="p-6 bg-gray-50 min-h-screen">
+
+
+<main class="p-6 bg-gray-100 dark:bg-[#2a2e31] min-h-screen text-gray-900 dark:text-white">
   <!-- Título principal -->
-  <h1 class="text-3xl font-bold text-blue-700 mb-6">Dashboard Nacional</h1>
+  <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">Dashboard Nacional</h1>
 
-  <!-- Contenedor tipo grid para los gráficos -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    
-    <!-- Gráfico de distribución de quintiles -->
-    <div class="shadow-lg rounded-lg bg-white p-4">
-      <h2 class="text-xl font-semibold mb-4">Distribución Quintiles Nacional</h2>
-      <DistribucionQuintiles />
+  <!-- Contenedor general visual -->
+  <div class="bg-white dark:bg-[#1d2022] rounded-xl p-6 shadow-md border border-gray-300 dark:border-[#8a9095]">
+    <!-- Grid de 2 columnas para tablas y gráficos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Fila 1: Quintiles -->
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Tabla de Datos de Quintiles Nacional</h2>
+        <TablaQuintiles />
+      </div>
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Distribución Quintiles Nacional</h2>
+        <DistribucionQuintiles />
+      </div>
+
+      <!-- Fila 2: España -->
+      <div class="mt-16">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ">Tabla de Centiles por CCAA</h2>
+        <TablaEspaña />
+      </div>
+      <div class="mt-16">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Mapa de España por CCAA</h2>
+        <MapaEspaña />
+      </div>
+
+      <!-- Fila 3: Curva Movilidad -->
+      <div class="mt-20">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Tabla de Centiles Padres-Hijos</h2>
+        <TablaCurvaMovilidad />
+      </div>
+      <div class="mt-20">
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Curva de Movilidad Nacional</h2>
+        <CurvaMovilidadNacional />
+      </div>
     </div>
-
-    <!-- Mapa de España -->
-    <div class="shadow-lg rounded-lg bg-white p-4">
-      <h2 class="text-xl font-semibold mb-4">Mapa de España por CCAA</h2>
-      <MapaEspaña />
-    </div>
-
-    <!-- Curva de movilidad nacional -->
-    <div class="shadow-lg rounded-lg bg-white p-4 md:col-span-2">
-      <h2 class="text-xl font-semibold mb-4">Curva de Movilidad Nacional</h2>
-      <CurvaMovilidadNacional />
-    </div>
-
   </div>
 </main>
 
-<style>
-  .cabecera-dashboard {  /* Franja verde */
-    background-color: #26AD5F;
-    width: 100%; /* ocupa todo el ancho */
-    padding: 20px 30px; /* altura y espacio lateral */
-  }
 
-  .cabecera-contenido {   /* Contenedor interno con botón y título */
-    display: flex; /* coloca elementos en fila */
-    align-items: center; /* alinea verticalmente */
-    gap: 20px; /* espacio entre botón y título */
-  }
 
-  .cabecera-titulo { /* Titulo Escalera Social */
-    position: absolute; /* se posiciona respecto al contenedor */
-    left: 50%; /* punto central del contenedor */
-    transform: translateX(-50%); /* lo centra visualmente */
-    color: black;
-    font-size: 34px;
-    font-weight: bold;
-  }
 
-  .cabecera-boton { /*Boton*/
-    background-color: white;
-    border-radius: 6px; /* esquinas redondeadas */
-    padding: 4px 15px; /* tamaño */
-    font-size: 25px;
-    cursor: pointer; /* cursor tipo mano al pasar por encima */
-  }
 
-</style>
+
+
+
