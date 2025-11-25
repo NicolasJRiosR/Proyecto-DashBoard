@@ -1,6 +1,6 @@
 <script>
   import * as d3 from "d3";
-  import { onMount } from "Svelte";
+  import { onMount } from "svelte";
 
   let data = [];
   let chartEl;
@@ -23,10 +23,8 @@
     if (!chartEl || data.length === 0) return;
 
     const containerWidth = chartEl.clientWidth || 850;
-
     const width = Math.min(containerWidth, 900);
     const height = width * 0.60;
-
     const margin = { top: 90, right: 60, bottom: 90, left: 120 };
 
     d3.select(chartEl).selectAll("*").remove();
@@ -109,123 +107,12 @@
       .attr("text-anchor","middle")
       .attr("font-size", 20)
       .attr("font-weight","bold")
-      .text("Movilidad intergeneracional - Matriz de porcentajes");
   }
 </script>
 
-<!-- ⭐ NUEVO CONTENEDOR CENTRADO -->
-<div class="outer">
-  <div class="layout">
-
-    <!-- TABLA -->
-    <div class="tabla-container">
-      <h3>Tabla de datos</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Padres</th>
-            <th>Hijos</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each data as row}
-            <tr>
-              <td>{row.padres}</td>
-              <td>{row.hijos}</td>
-              <td>{row.porcentaje}%</td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
-
-    <!-- CHART -->
-    <div class="chart" bind:this={chartEl}></div>
-
-  </div>
-</div>
+<div class="chart" bind:this={chartEl}></div>
 
 <style>
-
-  /* ⭐ CONTENEDOR PRINCIPAL PARA CENTRAR */
-  .outer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
-    /* 📌 MÁS ESPACIO A LA IZQUIERDA */
-    padding-left: 80px;
-
-    padding-right: 20px;
-    box-sizing: border-box;
-  }
-
-  @media (max-width: 900px) {
-    .outer {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
-
-  .layout {
-    display: flex;
-    flex-direction: row;
-    gap: 36px;
-    align-items: flex-start;
-  
-    /* mantiene todo centrado */
-    width: 100%;
-  }
-
-  /* 📱 En móviles tabla y gráfico uno abajo del otro */
-  @media (max-width: 900px) {
-    .layout {
-      flex-direction: column;
-      gap: 20px;
-    }
-  }
-
-  .tabla-container {
-    width: 100%;
-    max-width: 600px;
-    max-height: 450px;
-    overflow-y: auto;
-    border: 1px solid #e5e5e5;
-    padding: 16px;
-    border-radius: 8px;
-    background: #fafafa;
-  }
-
-  .tabla-container h3 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  th {
-    background: #e9edf5;
-    padding: 6px;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-  }
-
-  td {
-    padding: 6px;
-    border-bottom: 1px solid #eee;
-  }
-
-  tr:nth-child(even) {
-    background: #f7f9fc;
-  }
-
   .chart {
     width: 100%;
   }

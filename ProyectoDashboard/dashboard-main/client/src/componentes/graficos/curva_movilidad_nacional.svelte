@@ -21,7 +21,7 @@
   });
 
   function renderChart(data) {
-    const width = 600;   // igual ancho que tabla
+    const width = 600;
     const height = 450;
     const margin = { top: 50, right: 40, bottom: 50, left: 60 };
 
@@ -32,6 +32,9 @@
       .attr("width", width)
       .attr("height", height);
 
+    const isDark = document.documentElement.classList.contains("dark");
+    const textColor = isDark ? "white" : "black";
+
     const x = d3.scaleLinear()
       .domain(d3.extent(data, d => d.padresCentil))
       .range([margin.left, width - margin.right]);
@@ -41,30 +44,40 @@
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    // Ejes
+    // Eje X
     svg.append("g")
       .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("class", "text-black dark:text-white");
 
+    // Eje Y
     svg.append("g")
       .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y))
+      .selectAll("text")
+      .attr("class", "text-black dark:text-white");
 
-    // Etiquetas
+
+    // Etiquetas adaptadas al modo claro/oscuro
     svg.append("text")
-      .attr("x", width / 2)
-      .attr("y", height - 10)
-      .attr("text-anchor", "middle")
-      .text("Centil de los padres");
+    .attr("x", width / 2)
+    .attr("y", height - 10)
+    .attr("text-anchor", "middle")
+    .attr("fill", textColor)
+    .text("Centil de los padres");
 
-    svg.append("text")
-      .attr("transform", `rotate(-90)`)
-      .attr("x", -height / 2)
-      .attr("y", 20)
-      .attr("text-anchor", "middle")
-      .text("Centil medio de los hijos");
+  svg.append("text")
+    .attr("transform", `rotate(-90)`)
+    .attr("x", -height / 2)
+    .attr("y", 20)
+    .attr("text-anchor", "middle")
+    .attr("fill", textColor)
+    .text("Centil medio de los hijos");
 
-    // Línea de referencia (hijos = padres)
+
+
+    // Línea de referencia
     const minVal = Math.max(d3.min(data, d => d.padresCentil), d3.min(data, d => d.hijosCentil));
     const maxVal = Math.min(d3.max(data, d => d.padresCentil), d3.max(data, d => d.hijosCentil));
 
@@ -130,8 +143,9 @@
       .attr("stroke", "gray")
       .attr("stroke-width", 2);
     legend.append("text")
-      .attr("x", 25).attr("y", 2)   
-      .style("font-size", "12px")   
+      .attr("x", 25).attr("y", 2)
+      .style("font-size", "12px")
+      .attr("fill", textColor)
       .text("Hijos = Padres");
 
     legend.append("line")
@@ -140,11 +154,14 @@
       .attr("stroke", "#457b9d")
       .attr("stroke-width", 2);
     legend.append("text")
-      .attr("x", 25).attr("y", 22)  
-      .style("font-size", "12px")   
+      .attr("x", 25).attr("y", 22)
+      .style("font-size", "12px")
+      .attr("fill", textColor)
       .text("Curva de movilidad real");
   }
 </script>
+
+<div bind:this={chartEl} class="bg-white dark:bg-[#1d2022] p-4 rounded-lg"></div>
 
 <style>
   :global(svg) {
@@ -155,81 +172,4 @@
     stroke-width: 1.5;
     r: 4;
   }
-
-.outer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start; /* alineación izquierda */
-  gap: 36px;
-  flex-wrap: wrap;
-  padding: 20px 20px 20px 80px; /* igual que antes */
-  box-sizing: border-box;
-}
-
-  .tabla-container {
-    width: 100%;
-    max-width: 600px; /* igual ancho que otras tablas y gráfico */
-    max-height: 450px;
-    overflow-y: auto;
-    border: 1px solid #e5e5e5;
-    padding: 16px;
-    border-radius: 8px;
-    background: #fafafa;
-    box-sizing: border-box;
-  }
-
-  .tabla-container h3 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  th {
-    background: #e9edf5;
-    padding: 6px;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-  }
-
-  td {
-    padding: 6px;
-    border-bottom: 1px solid #eee;
-  }
-
-  tr:nth-child(even) {
-    background: #f7f9fc;
-  }
 </style>
-
-<div class="outer">
-  <!-- Tabla de datos -->
-  <div class="tabla-container">
-    <h3>Centiles Padres-Hijos</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Centil Padres</th>
-          <th>Centil Hijos</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each data as row}
-          <tr>
-            <td>{row.padresCentil}</td>
-            <td>{row.hijosCentil}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Gráfico -->
-  <div bind:this={chartEl}></div>
-</div>
