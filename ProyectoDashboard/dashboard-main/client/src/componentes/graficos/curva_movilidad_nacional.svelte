@@ -71,7 +71,6 @@
     .text("Centil medio de los hijos");
 
 
-
     // Línea de referencia
     const minVal = Math.max(d3.min(data, d => d.padresCentil), d3.min(data, d => d.hijosCentil));
     const maxVal = Math.min(d3.max(data, d => d.padresCentil), d3.max(data, d => d.hijosCentil));
