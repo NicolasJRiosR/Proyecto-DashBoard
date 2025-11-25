@@ -48,16 +48,10 @@
     svg.append("g")
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("fill", textColor);
-
     // Eje Y
     svg.append("g")
       .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y))
-      .selectAll("text")
-      .attr("fill", textColor);
-
 
 
     // Etiquetas adaptadas al modo claro/oscuro
@@ -172,5 +166,21 @@
     stroke: black;
     stroke-width: 1.5;
     r: 4;
+  }
+  :global(svg) {
+    font-family: sans-serif;
+  }
+  :global(circle:hover) {
+    stroke: black;
+    stroke-width: 1.5;
+    r: 4;
+  }
+
+  /* ← AÑADE ESTO */
+  :global(svg text) {
+    fill: black;
+  }
+  :global(.dark svg text) {
+    fill: white;
   }
 </style>
