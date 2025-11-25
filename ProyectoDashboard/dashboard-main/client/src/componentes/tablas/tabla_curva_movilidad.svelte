@@ -21,7 +21,7 @@
             rounded-lg 
             bg-[#fafafa] dark:bg-[#1d2022] 
             p-4 
-            text-black dark:text-white">
+            text-black dark:text-white ml-10">
     
   <table class="w-full border-collapse text-sm">
     <thead>

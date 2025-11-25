@@ -151,16 +151,18 @@
 <style>
   #mapa { position: relative; }
   #tooltip {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 6px 8px;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    font-size: 13px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  color: #000; /* Forzar texto negro en modo oscuro */
+}
+
 
   @media (max-width: 900px) {
     #mapa svg {

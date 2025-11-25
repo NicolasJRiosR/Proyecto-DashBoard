@@ -14,12 +14,13 @@
   });
 </script>
 
-<div class="w-full max-w-xl max-h-[450px] overflow-y-auto 
+<div class="w-[101%] max-w-xl max-h-[450px] overflow-y-auto 
             border border-[#e5e5e5] dark:border-[#8a9095] 
             rounded-lg 
             bg-[#fafafa] dark:bg-[#1d2022] 
             p-4 
-            text-black dark:text-white">
+            text-black dark:text-white
+            ml-10">
     
   <table class="w-full border-collapse text-sm">
     <thead>
@@ -42,4 +43,3 @@
     </tbody>
   </table>
 </div>
-

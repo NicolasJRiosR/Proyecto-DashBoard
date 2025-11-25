@@ -42,9 +42,7 @@
     >
       ☾☼
     </button>
-    <h1 class="absolute left-1/2 -translate-x-1/2 text-black dark:text-white text-[34px] font-bold">
-      Escalera Social
-    </h1>
+    <h1 class="absolute left-1/2 -translate-x-1/2 text-black dark:text-white text-[34px] font-bold">ESCALERA SOCIAL</h1>
   </div>
 </header>
 
@@ -61,31 +59,31 @@
       
       <!-- Fila 1: Quintiles -->
       <div class="mt-6">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Tabla de Datos de Quintiles Nacional</h2>
-        <TablaQuintiles />
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[100px]">Tabla de Datos de Quintiles Nacional</h2>
+        <TablaQuintiles class="w-full" />
       </div>
       <div class="mt-6">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Distribución Quintiles Nacional</h2>
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[223px]">Distribución Quintiles Nacional</h2>
         <DistribucionQuintiles />
       </div>
 
       <!-- Fila 2: España -->
       <div class="mt-16">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ">Tabla de Centiles por CCAA</h2>
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[150px]">Tabla de Centiles por CCAA</h2>
         <TablaEspaña />
       </div>
       <div class="mt-16">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Mapa de España por CCAA</h2>
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[225px]">Mapa de España por CCAA</h2>
         <MapaEspaña />
       </div>
 
       <!-- Fila 3: Curva Movilidad -->
       <div class="mt-20">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Tabla de Centiles Padres-Hijos</h2>
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[140px]">Tabla de Centiles Padres-Hijos</h2>
         <TablaCurvaMovilidad />
       </div>
       <div class="mt-20">
-        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white">Curva de Movilidad Nacional</h2>
+        <h2 class="text-xl font-semibold mb-5 text-gray-900 dark:text-white ml-[225px]">Curva de Movilidad Nacional</h2>
         <CurvaMovilidadNacional />
       </div>
     </div>
