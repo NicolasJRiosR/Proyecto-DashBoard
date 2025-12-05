@@ -57,7 +57,7 @@
     // Etiqueta eje X
     svg.append("text")
       .attr("x", (margin.left + (width - margin.right)) / 2)   // centrada respecto al gráfico
-      .attr("y", height - margin.bottom + 53)                  // pegada al eje
+      .attr("y", height - margin.bottom + 35)                  // pegada al eje
       .attr("text-anchor", "middle")
       .attr("fill", textColor)
       .text("Centil de los padres");
@@ -65,7 +65,7 @@
     svg.append("text")
       .attr("transform", `rotate(-90)`)
       .attr("x", -(margin.top + (height - margin.bottom)) / 2) // centrada verticalmente en la zona del gráfico
-      .attr("y", margin.left - 50)                             // se aleja del eje y deja espacio
+      .attr("y", margin.left - 35)                             // se aleja del eje y deja espacio
       .attr("text-anchor", "middle")
       .attr("fill", textColor)
       .text("Centil medio de los hijos");
