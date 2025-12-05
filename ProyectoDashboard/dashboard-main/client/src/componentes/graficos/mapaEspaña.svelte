@@ -68,6 +68,7 @@
         .append("svg")
         .attr("width", width)
         .attr("height", height);
+        
 
       const mainGroup = svg.append("g");
       const canariasGroup = svg.append("g");
@@ -88,23 +89,24 @@
                 .style("opacity", 1)
                 .style("left", event.pageX + "px")
                 .style("top", event.pageY + "px")
-                .html(`<b>${displayName}</b><br/>centil_hijo: ${v ?? "sin dato"}`);
+                .html(`<b>${displayName}</b><br/>Centil Hijo: ${v ?? "sin dato"}`);
             })
             .on("mouseout", () => d3.select("#tooltip").style("opacity", 0));
         };
 
         if (geoKey.includes("canarias")) {
-          drawPath(canariasGroup, geoConicConformal().center([0, 28]).scale(700).translate([width * 0.75, height - 60]));
+          drawPath(canariasGroup, geoConicConformal().center([0, 28]).scale(700).translate([width * 0.75, height - 115]));
         } else {
           drawPath(mainGroup, projection);
         }
       });
+      
 
       // Leyenda
       const legendWidth = 220 * 0.9;
       const legendHeight = 10;
       const legendX = 20;
-      const legendY = height - 40;
+      const legendY = 340;
 
       const legendScale = d3.scaleLinear().domain([minVal, maxVal]).range([0, legendWidth]);
       const legendAxis = d3.axisBottom(legendScale).ticks(4).tickSize(6);
@@ -160,7 +162,7 @@
   opacity: 0;
   font-size: 13px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  color: #000; /* Forzar texto negro en modo oscuro */
+  color: #000; 
 }
 
 

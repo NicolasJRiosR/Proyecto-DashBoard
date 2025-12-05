@@ -29,7 +29,7 @@
     <thead>
       <tr class="bg-[#e9edf5] dark:bg-[#2a2e31]">
         <th class="py-2 px-3 text-left border-b border-[#ccc] dark:border-[#8a9095]">CCAA</th>
-        <th class="py-2 px-3 text-left border-b border-[#ccc] dark:border-[#8a9095]">centil_hijo</th>
+        <th class="py-2 px-3 text-left border-b border-[#ccc] dark:border-[#8a9095]">Centil Hijo</th>
       </tr>
     </thead>
     <tbody>
@@ -50,4 +50,3 @@
     <p class="text-center text-sm mt-2 text-red-600 dark:text-red-400">{errorMsg}</p>
   {/if}
 </div>
-
